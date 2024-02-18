@@ -1,7 +1,7 @@
 import fs from "fs/promises";
-// import process from "process";
+import process from "process";
 
-// process.chdir(import.meta.dirname);
+process.chdir(import.meta.dirname);
 
 export const getClothes = async (req, res) => {
     const page = parseInt(req.query.page) || 0;
