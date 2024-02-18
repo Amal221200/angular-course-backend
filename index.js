@@ -13,10 +13,11 @@ const clientOrigin = process.env.CLIENT_ORIGIN || "http://localhost:4200";
 
 // Cors configuration - Allows requests from localhost:4200
 const corsOptions = {
-  origin: clientOrigin,
-  optionsSuccessStatus: 204,
-  methods: "GET, POST, PUT, DELETE",
-};
+  "origin": "*",
+  "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+  "preflightContinue": false,
+  "optionsSuccessStatus": 204
+}
 
 // Use cors middleware
 app.use(cors(corsOptions));
