@@ -1,12 +1,9 @@
 import fs from "fs/promises";
-import process from "process";
-
-process.chdir(import.meta.dirname);
 
 export const getClothes = async (req, res) => {
     const page = parseInt(req.query.page) || 0;
     const perPage = parseInt(req.query.perPage) || 10;
-    const data = await fs.readFile('../db/db.json', 'utf-8');
+    const data = await fs.readFile('./db.json', 'utf-8');
     const jsonData = JSON.parse(data);
     const start = page * perPage;
     const end = start + perPage;
@@ -25,7 +22,7 @@ export const getClothes = async (req, res) => {
 
 export const addCloth = async (req, res) => {
     const { image, name, price, rating } = req.body;
-    const data = await fs.readFile('../db/db.json', 'utf-8');
+    const data = await fs.readFile('./db.json', 'utf-8');
     const jsonData = JSON.parse(data);
 
     const maxId = jsonData.items.reduce((max, item) => Math.max(max, item.id), 0);
@@ -49,7 +46,7 @@ export const addCloth = async (req, res) => {
 export const editCloth = async (req, res) => {
     const { id } = parseInt(req.params);
     const { image, name, price, rating } = req.body;
-    const data = await fs.readFile("../db/db.json", "utf-8");
+    const data = await fs.readFile("./db.json", "utf-8");
 
     const jsonData = JSON.parse(data);
     const index = jsonData.items.findIndex((item) => item.id === id);
@@ -65,7 +62,7 @@ export const editCloth = async (req, res) => {
         price,
         rating,
     };
-    await fs.writeFile("../db/db.json", JSON.stringify(jsonData), 'utf-8');
+    await fs.writeFile("./db.json", JSON.stringify(jsonData), 'utf-8');
 
     res.setHeader('Content-Type', 'application/json');
     res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
@@ -74,7 +71,7 @@ export const editCloth = async (req, res) => {
 
 export const deleteCloth = async (req, res) => {
     const { id } = parseInt(req.params);
-    const data = await fs.readFile("../db/db.json", "utf-8");
+    const data = await fs.readFile("./db.json", "utf-8");
 
     const jsonData = JSON.parse(data);
 
@@ -85,7 +82,7 @@ export const deleteCloth = async (req, res) => {
     }
 
     jsonData.items.splice(index, 1);
-    await fs.writeFile("../db/db.json", JSON.stringify(jsonData), "utf-8");
+    await fs.writeFile("./db.json", JSON.stringify(jsonData), "utf-8");
 
     res.setHeader('Content-Type', 'application/json');
     res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');

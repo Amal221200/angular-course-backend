@@ -1,7 +1,7 @@
 import express, { Router } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import { editCloth, addCloth, deleteCloth, getClothes } from "./controllers/clothesController.js";
+import { editCloth, addCloth, deleteCloth, getClothes } from "./clothesController.js";
 
 
 dotenv.config();
