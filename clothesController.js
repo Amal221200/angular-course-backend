@@ -24,7 +24,7 @@ export const addCloth = async (req, res) => {
     const { image, name, price, rating } = req.body;
     const data = await fs.readFile('./db.json', 'utf-8');
     const jsonData = JSON.parse(data);
-
+console.log("Adding Clothes");
     const maxId = jsonData.items.reduce((max, item) => Math.max(max, item.id), 0);
 
     const newItem = {
@@ -36,7 +36,7 @@ export const addCloth = async (req, res) => {
     };
 
     jsonData.items.push(newItem);
-    await fs.writeFile('../db/db.json', JSON.stringify(jsonData), 'utf-8');
+    await fs.writeFile('./db.json', JSON.stringify(jsonData), 'utf-8');
 
     res.setHeader('Content-Type', 'application/json');
     res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
@@ -44,7 +44,7 @@ export const addCloth = async (req, res) => {
 }
 
 export const editCloth = async (req, res) => {
-    const { id } = parseInt(req.params);
+    const id = parseInt(req.params.id);
     const { image, name, price, rating } = req.body;
     const data = await fs.readFile("./db.json", "utf-8");
 
@@ -70,13 +70,13 @@ export const editCloth = async (req, res) => {
 }
 
 export const deleteCloth = async (req, res) => {
-    const { id } = parseInt(req.params);
+    const id = parseInt(req.params.id);
     const data = await fs.readFile("./db.json", "utf-8");
 
     const jsonData = JSON.parse(data);
 
     const index = jsonData.items.findIndex((item) => item.id === id);
-
+    console.log(id);
     if (index === -1) {
         return res.status(404).send("Not Found");
     }

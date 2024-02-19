@@ -13,26 +13,29 @@ const clientOrigin = process.env.CLIENT_ORIGIN || "http://localhost:4200";
 
 // Cors configuration - Allows requests from localhost:4200
 const corsOptions = {
-  "origin": "*",
+  "origin": clientOrigin,
   "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
-  "preflightContinue": false,
+  // "preflightContinue": false,
   "optionsSuccessStatus": 204
 }
+
 
 // Use cors middleware
 app.use(cors(corsOptions));
 
 // Use express.json() middleware to parse JSON bodies of requests
 app.use(express.json());
-app.get("/", (req, res) => {
 
+app.get("/", (req, res) => {
   return res.json({ "Message": "Hello World!" })
 })
 
 // GET route - Allows to get all the items
 // example: localhost:3000/clothes?page=0&perPage=2
-router.route("/").get(getClothes).post(addCloth);
-router.route("/:id").put(editCloth).delete(deleteCloth);
+router.get("/", getClothes);
+router.post("/", addCloth);
+router.put("/:id", editCloth);
+router.delete("/:id", deleteCloth);
 
 app.use("/api/clothes", router);
 
